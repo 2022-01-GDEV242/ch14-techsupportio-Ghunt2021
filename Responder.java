@@ -23,8 +23,11 @@ public class Responder
     private HashMap<String, String> responseMap;
     // Default responses to use if we don't recognise a word.
     private ArrayList<String> defaultResponses;
+    private HashMap<String, String> specificResponses;
     // The name of the file containing the default responses.
     private static final String FILE_OF_DEFAULT_RESPONSES = "default.txt";
+    private static final String FILE_OF_SPECIFIC_RESPONSES = "Responses.txt";
+    
     private Random randomGenerator;
 
     /**
@@ -67,98 +70,28 @@ public class Responder
      */
     private void fillResponseMap()
     {
-        responseMap.put("crash", 
-                        "Well, it never crashes on our system. It must have something\n" +
-                        "to do with your system. Tell me more about your configuration.");
-        responseMap.put("crashes", 
-                        "Well, it never crashes on our system. It must have something\n" +
-                        "to do with your system. Tell me more about your configuration.");
-        responseMap.put("slow", 
-                        "I think this has to do with your hardware. Upgrading your processor\n" +
-                        "should solve all performance problems. Have you got a problem with\n" +
-                        "our software?");
-        responseMap.put("performance", 
-                        "Performance was quite adequate in all our tests. Are you running\n" +
-                        "any other processes in the background?");
-        responseMap.put("bug", 
-                        "Well, you know, all software has some bugs. But our software engineers\n" +
-                        "are working very hard to fix them. Can you describe the problem a bit\n" +
-                        "further?");
-        responseMap.put("buggy", 
-                        "Well, you know, all software has some bugs. But our software engineers\n" +
-                        "are working very hard to fix them. Can you describe the problem a bit\n" +
-                        "further?");
-        responseMap.put("windows", 
-                        "This is a known bug to do with the Windows operating system. Please\n" +
-                        "report it to Microsoft. There is nothing we can do about this.");
-        responseMap.put("macintosh", 
-                        "This is a known bug to do with the Mac operating system. Please\n" +
-                        "report it to Apple. There is nothing we can do about this.");
-        responseMap.put("expensive", 
-                        "The cost of our product is quite competitive. Have you looked around\n" +
-                        "and really compared our features?");
-        responseMap.put("installation", 
-                        "The installation is really quite straight forward. We have tons of\n" +
-                        "wizards that do all the work for you. Have you read the installation\n" +
-                        "instructions?");
-        responseMap.put("memory", 
-                        "If you read the system requirements carefully, you will see that the\n" +
-                        "specified memory requirements are 1.5 giga byte. You really should\n" +
-                        "upgrade your memory. Anything else you want to know?");
-        responseMap.put("linux", 
-                        "We take Linux support very seriously. But there are some problems.\n" +
-                        "Most have to do with incompatible glibc versions. Can you be a bit\n" +
-                        "more precise?");
-        responseMap.put("bluej", 
-                        "Ahhh, BlueJ, yes. We tried to buy out those guys long ago, but\n" +
-                        "they simply won't sell... Stubborn people they are. Nothing we can\n" +
-                        "do about it, I'm afraid.");
-        
-        responseMap.put(".sys",
-                        "What kind of system files are you looking at? There could be\n" +
-                        "many internal issues with that, do you want us to give you the number \n" +
-                        "to one of our technicians?"
-                       ); 
-                        
-        responseMap.put("sys",
-                        "What kind of system files are you looking at? There could be \n" +
-                        "many internal issues with that, do you want us to give you the number \n" +
-                        "to one of our technicians?"
-                       );              
-                       
-        responseMap.put(".dll",
-                       "Very important files are stored in .dll files. \n" +
-                       "Where are these located? Knowing where these would be located\n" +
-                       " would really help us with the error. Could ou give more information?"
-                       );
-                       
-        responseMap.put("dll",
-                       "Very important files are stored in .dll files. \n" +
-                       "Where are these located? Knowing where these would be located\n" +
-                       " would really help us with the error. Could ou give more information?"
-                       );
-                       
-        responseMap.put(".exe",
-                       "This is an executable file, as long as it's from our website or a \n" +
-                       "certified worker or technician here, you should be entirely okay."
-                       );                       
-                       
-        responseMap.put("exe",
-                       "This is an executable file, as long as it's from our website or a \n" +
-                       "certified worker or technician here, you should be entirely okay."
-                       );                       
-                       
-        responseMap.put(".log",
-                       "This log file contains events and records from your PC. This includes \n" +
-                       "communications between the system and the users on the PC. Did you possibly \n" +
-                       "mess with this file or tinker with it at all?"
-                       );
-                       
-        responseMap.put("log",
-                       "This log file contains events and records from your PC. This includes \n" +
-                       "communications between the system and the users on the PC. Did you possibly \n" +
-                       "mess with this file or tinker with it at all?"
-                       );                      
+        Charset charset = Charset.forName("US-ASCII");
+        Path path = Paths.get(FILE_OF_SPECIFIC_RESPONSES);
+        try (BufferedReader reader = Files.newBufferedReader(path, charset)) {
+            String keyword = reader.readLine();
+            String response = reader.readLine();
+            while(response != null) {
+                specificResponses.put(keyword, response);
+                response = reader.readLine();
+            }
+        }
+        catch(FileNotFoundException e) {
+            System.err.println("Unable to open " + FILE_OF_SPECIFIC_RESPONSES);
+        }
+        catch(IOException e) {
+            System.err.println("A problem was encountered reading " +
+            FILE_OF_SPECIFIC_RESPONSES);
+        }
+        // Make sure we have at least one response.
+        if(specificResponses.size() == 0) {
+            //specificResponses.add("Could you elaborate on that?");'
+            System.out.println("Could you elaborate on that?");
+        }                   
                         
     }
 
@@ -182,7 +115,7 @@ public class Responder
         }
         catch(IOException e) {
             System.err.println("A problem was encountered reading " +
-                               FILE_OF_DEFAULT_RESPONSES);
+            FILE_OF_DEFAULT_RESPONSES);
         }
         // Make sure we have at least one response.
         if(defaultResponses.size() == 0) {
