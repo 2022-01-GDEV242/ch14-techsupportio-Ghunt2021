@@ -30,7 +30,7 @@ public class InputReader
      */
     public HashSet<String> getInput() 
     {
-        System.out.print("> ");                // print prompt
+        System.out.print("\n > ");                // print prompt
         String inputLine = reader.nextLine().trim().toLowerCase();
 
         String[] wordArray = inputLine.split(" ");  // split at spaces
@@ -40,6 +40,7 @@ public class InputReader
         for(String word : wordArray) {
             words.add(word);
         }
+        
         return words;
     }
 }

@@ -113,6 +113,53 @@ public class Responder
                         "Ahhh, BlueJ, yes. We tried to buy out those guys long ago, but\n" +
                         "they simply won't sell... Stubborn people they are. Nothing we can\n" +
                         "do about it, I'm afraid.");
+        
+        responseMap.put(".sys",
+                        "What kind of system files are you looking at? There could be\n" +
+                        "many internal issues with that, do you want us to give you the number \n" +
+                        "to one of our technicians?"
+                       ); 
+                        
+        responseMap.put("sys",
+                        "What kind of system files are you looking at? There could be \n" +
+                        "many internal issues with that, do you want us to give you the number \n" +
+                        "to one of our technicians?"
+                       );              
+                       
+        responseMap.put(".dll",
+                       "Very important files are stored in .dll files. \n" +
+                       "Where are these located? Knowing where these would be located\n" +
+                       " would really help us with the error. Could ou give more information?"
+                       );
+                       
+        responseMap.put("dll",
+                       "Very important files are stored in .dll files. \n" +
+                       "Where are these located? Knowing where these would be located\n" +
+                       " would really help us with the error. Could ou give more information?"
+                       );
+                       
+        responseMap.put(".exe",
+                       "This is an executable file, as long as it's from our website or a \n" +
+                       "certified worker or technician here, you should be entirely okay."
+                       );                       
+                       
+        responseMap.put("exe",
+                       "This is an executable file, as long as it's from our website or a \n" +
+                       "certified worker or technician here, you should be entirely okay."
+                       );                       
+                       
+        responseMap.put(".log",
+                       "This log file contains events and records from your PC. This includes \n" +
+                       "communications between the system and the users on the PC. Did you possibly \n" +
+                       "mess with this file or tinker with it at all?"
+                       );
+                       
+        responseMap.put("log",
+                       "This log file contains events and records from your PC. This includes \n" +
+                       "communications between the system and the users on the PC. Did you possibly \n" +
+                       "mess with this file or tinker with it at all?"
+                       );                      
+                        
     }
 
     /**
