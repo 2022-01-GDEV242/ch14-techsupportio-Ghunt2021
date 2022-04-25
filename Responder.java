@@ -74,6 +74,10 @@ public class Responder
         Path path = Paths.get(FILE_OF_SPECIFIC_RESPONSES);
         try (BufferedReader reader = Files.newBufferedReader(path, charset)) {
             String keyword = reader.readLine();
+            String[] keywords = keyword.split(",");
+            //Insert For-Each Loop
+            
+            
             String response = reader.readLine();
             while(response != null) {
                 specificResponses.put(keyword, response);
