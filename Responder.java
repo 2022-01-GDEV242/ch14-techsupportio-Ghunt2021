@@ -75,8 +75,10 @@ public class Responder
         try (BufferedReader reader = Files.newBufferedReader(path, charset)) {
             String keyword = reader.readLine();
             String[] keywords = keyword.split(",");
-            //Insert For-Each Loop
-            
+            for (int i=0; i < keywords.length; i++) 
+            { 
+            keyword = keywords.toString();
+            }
             
             String response = reader.readLine();
             while(response != null) {
